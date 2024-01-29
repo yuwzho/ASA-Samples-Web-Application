@@ -15,6 +15,7 @@ export abstract class RestService<T extends Entity> {
     protected client: AxiosInstance;
 
     public constructor(baseUrl: string, baseRoute: string) {
+        console.log(`baseURL is ${baseUrl} and baseRoute is ${baseRoute}`)
         this.client = axios.create({
             baseURL: `${baseUrl}${baseRoute}`
         });

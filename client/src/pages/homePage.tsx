@@ -9,12 +9,11 @@ import { AppContext } from '../models/applicationState';
 import { ItemActions } from '../actions/itemActions';
 import { ListActions } from '../actions/listActions';
 import { stackItemPadding, stackPadding, titleStackStyles } from '../ux/styles';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { bindActionCreators } from '../actions/actionCreators';
 import { withApplicationInsights } from '../components/telemetry';
 
 const HomePage = () => {
-    const navigate = useNavigate();
     const appContext = useContext<AppContext>(TodoContext)
     const { listId, itemId } = useParams();
     const actions = useMemo(() => ({
@@ -35,9 +34,10 @@ const HomePage = () => {
     useEffect(() => {
         if (appContext.state.lists?.length && !listId && !appContext.state.selectedList) {
             const defaultList = appContext.state.lists[0];
-            navigate(`/lists/${defaultList.id}`);
+            console.log('starts to load list ' + defaultList.id || '1')
+            actions.lists.load(defaultList.id || '1');
         }
-    }, [appContext.state.lists, appContext.state.selectedList, listId, navigate])
+    }, [appContext.state.lists, appContext.state.selectedList, listId])
 
     // React to selected list changes
     useEffect(() => {
@@ -82,14 +82,13 @@ const HomePage = () => {
     const onItemDeleted = (item: TodoItem) => {
         if (item.id) {
             actions.items.remove(item.listId, item);
-            navigate(`/lists/${item.listId}`);
+            actions.lists.load(item.listId);
         }
     }
 
     const deleteList = () => {
         if (appContext.state.selectedList?.id) {
             actions.lists.remove(appContext.state.selectedList.id);
-            navigate('/lists');
         }
     }
 

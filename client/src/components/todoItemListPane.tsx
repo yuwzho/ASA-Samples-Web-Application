@@ -140,7 +140,7 @@ const TodoItemListPane: FC<TodoItemListPaneProps> = (props: TodoItemListPaneProp
     }
 
     const selectItem = (item: TodoDisplayItem) => {
-        navigate(`/lists/${item.data.listId}/items/${item.data.id}`);
+        //navigate(`/lists/${item.data.listId}/items/${item.data.id}`);
     }
 
     const completeItems = () => {

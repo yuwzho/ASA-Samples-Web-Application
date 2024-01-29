@@ -25,14 +25,14 @@ const TodoListMenu: FC<TodoListMenuProps> = (props: TodoListMenuProps): ReactEle
             return;
         }
 
-        navigate(`/lists/${item.key}`);
+        //navigate(`/lists/${item.key}`);
     }
 
     const createNavGroups = (lists: TodoList[]): INavLinkGroup[] => {
         const links = lists.map(list => ({
             key: list.id,
             name: list.name,
-            url: `/lists/${list.id}`,
+            url: '.',
             links: [],
             isExpanded: props.selectedList ? list.id === props.selectedList.id : false
         }));
